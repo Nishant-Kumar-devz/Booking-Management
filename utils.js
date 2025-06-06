@@ -26,25 +26,37 @@ export function isTimeWithinRange(
   return isStartWithin && isEndWithin;
 }
 
-export function generateAvailableSlots(date, { start, end }) {
-  const startParts = start.split(":").map(Number);
-  const endParts = end.split(":").map(Number);
+export function generateAvailableSlots(
+  dateString,
+  { start: availabilityStartStr, end: availabilityEndStr }
+) {
+  const [availStartH, availStartM] = availabilityStartStr
+    .split(":")
+    .map(Number);
+  const [availEndH, availEndM] = availabilityEndStr.split(":").map(Number);
 
   const slots = [];
   const minDuration = 15;
 
-  let current = new Date(date);
-  current.setHours(startParts[0], startParts[1], 0, 0);
+  const dateParts = dateString.split("-").map(Number);
+  const year = dateParts[0];
+  const month = dateParts[1] - 1;
+  const day = dateParts[2];
 
-  const endTime = new Date(date);
-  endTime.setHours(endParts[0], endParts[1], 0, 0);
+  let currentUTC = new Date(
+    Date.UTC(year, month, day, availStartH, availStartM, 0, 0)
+  );
+  const endTimeUTC = new Date(
+    Date.UTC(year, month, day, availEndH, availEndM, 0, 0)
+  );
 
-  while (current < endTime) {
-    const next = new Date(current.getTime() + minDuration * 60000);
-    if (next > endTime) break;
-    slots.push({ start: new Date(current), end: new Date(next) });
-    current = next;
+  while (currentUTC < endTimeUTC) {
+    const nextUTC = new Date(currentUTC.getTime() + minDuration * 60000);
+    if (nextUTC > endTimeUTC) {
+      break;
+    }
+    slots.push({ start: new Date(currentUTC), end: new Date(nextUTC) });
+    currentUTC = nextUTC;
   }
-
   return slots;
 }
