@@ -1,6 +1,6 @@
 {
   "name": "booking-management",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "A lightweight Node.js SDK for handling time-slot bookings.",
   "main": "index.js",
   "type": "module",
