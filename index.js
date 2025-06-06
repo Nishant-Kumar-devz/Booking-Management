@@ -6,11 +6,9 @@ import mongoose from "mongoose";
 export default class BookingSDK {
   constructor() {
     if (mongoose.connection.readyState !== 1) {
-      throw new Error({
-        success: false,
-        message:
-          "Mongoose is not connected. Please ensure mongoose.connect() is called before using BookingSDK methods.",
-      });
+      throw new BookingSDKError(
+        "Mongoose is not connected. Please ensure mongoose.connect() is called before using BookingSDK methods."
+      );
     }
   }
 

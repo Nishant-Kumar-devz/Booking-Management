@@ -20,10 +20,9 @@ export const getAllBookings = async (page = 1, limit = 10) => {
 
 export const getBookingByDate = async (dateISO) => {
   if (!dateISO || isNaN(Date.parse(dateISO))) {
-    throw new Error({
-      success: false,
-      message: "Invalid date format. Please provide a valid ISO date string.",
-    });
+    throw new BookingSDKError(
+      "Invalid date format. Please provide a valid ISO date string."
+    );
   }
 
   const dateObj = new Date(dateISO);

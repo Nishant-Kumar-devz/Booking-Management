@@ -5,7 +5,7 @@ import { isTimeWithinRange, generateAvailableSlots } from "./utils.js";
 export async function bookSlot(userId, startTimeISO, duration) {
   const allowedDurations = [15, 30, 60];
   if (!allowedDurations.includes(duration)) {
-    throw new Error({ success: false, message: "Invalid duration." });
+    throw new BookingSDKError("Invalid duration.");
   }
 
   const startTime = new Date(startTimeISO);
@@ -14,14 +14,11 @@ export async function bookSlot(userId, startTimeISO, duration) {
 
   const day = startTime.toLocaleString("en-US", { weekday: "long" });
   if (config.offDays.includes(day)) {
-    throw new Error({ success: false, message: `${day} is a day off.` });
+    throw new BookingSDKError(`${day} is a day off.`);
   }
 
   if (!isTimeWithinRange(startTime, endTime, config.availableTime)) {
-    throw new Error({
-      success: false,
-      message: "Time is outside of available hours.",
-    });
+    throw new BookingSDKError("Time is outside of available hours.");
   }
 
   const conflict = await Booking.findOne({
@@ -36,7 +33,7 @@ export async function bookSlot(userId, startTimeISO, duration) {
   });
 
   if (conflict) {
-    throw new Error({ success: false, message: "Time slot already booked." });
+    throw new BookingSDKError("Time slot already booked.");
   }
 
   const booking = new Booking({ userId, startTime, endTime });
@@ -46,10 +43,9 @@ export async function bookSlot(userId, startTimeISO, duration) {
 
 export async function getAvailableSlots(dateISO) {
   if (!dateISO || isNaN(Date.parse(dateISO))) {
-    throw new Error({
-      success: false,
-      message: "Invalid date format. Please provide a valid ISO date string.",
-    });
+    throw new BookingSDKError(
+      "Invalid date format. Please provide a valid ISO date string."
+    );
   }
   const dateObj = new Date(dateISO);
 
