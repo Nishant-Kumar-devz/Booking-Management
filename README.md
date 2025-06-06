@@ -28,7 +28,8 @@ await mongoose.connect("mongodb://localhost:27017/booking");
 
 const booking = new BookingSDK({ dbConnection: mongoose.connection });
 
-// Set available time (shared across all non-day-off days)
+// Set available time (shared across all non-day-off days) 
+// default available time => start: "09:00", end: "17:00"
 await booking.setAvailableTime("09:00", "18:00");
 
 // Set day offs (e.g., ['Sunday', 'Saturday'])
