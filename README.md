@@ -5,7 +5,7 @@ A lightweight Node.js SDK for handling time-slot bookings with:
 - ✅ Day off configuration
 - ✅ Prevention of double bookings
 - ✅ Configurable time slots (15 min, 30 min, 1 hour)
-- ✅ Admin pagination to fetch all bookings
+- ✅ Admin pagination to fetch all bookings and fetch bookings by date
 - ✅ Simple and pluggable with MongoDB
 
 ---
@@ -50,7 +50,6 @@ Once your Mongoose connection is established, you can simply import and initiali
 
 ```js
 import BookingSDK from "booking-management";
-// No need to pass mongoose.connection explicitly now!
 
 const booking = new BookingSDK(); // Initialize the SDK
 
@@ -75,6 +74,10 @@ const slots = await booking.getAvailableSlots("2025-06-06");
 
 // Get all bookings with pagination (page number, limit per page)
 const allBookings = await booking.getAllBookings(1, 10);
+
+// Get bookings by date
+// date should be a string in "YYYY-MM-DD" format (e.g., "2025-06-06")
+const bookings = await booking.getBookingByDate('2025-06-06')
 ```
 
 ---
@@ -84,7 +87,8 @@ const allBookings = await booking.getAllBookings(1, 10);
 - [x] Day off management
 - [x] Time-range configuration
 - [x] Conflict-free booking logic
-- [x] Pagination support for admin
+- [x] Pagination support for fetching all bookings
+- [x] Support for fetching booking by date
 
 ---
 

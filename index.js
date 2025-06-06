@@ -1,6 +1,6 @@
 import { setAvailableTime, setDayOffs, getConfig } from './settings.js';
 import { bookSlot, getAvailableSlots } from './booking.js';
-import { getAllBookings } from './admin.js';
+import { getAllBookings, getBookingByDate } from './admin.js';
 import mongoose from 'mongoose';
 
 export default class BookingSDK {
@@ -32,5 +32,9 @@ export default class BookingSDK {
 
   getAllBookings(page, limit) {
     return getAllBookings(page, limit);
+  }
+
+  getBookingByDate(date) {
+    return getBookingByDate(date);
   }
 }
