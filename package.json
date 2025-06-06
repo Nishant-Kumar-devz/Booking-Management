@@ -1,0 +1,57 @@
+{
+  "name": "booking-management",
+  "version": "1.1.0",
+  "description": "A lightweight Node.js SDK for handling time-slot bookings.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nishant-Kumar-devz/Booking-Management.git"
+  },
+  "keywords": [
+    "booking-management",
+    "booking",
+    "time-slot",
+    "sdk",
+    "nodejs",
+    "javascript",
+    "api",
+    "management",
+    "scheduler",
+    "availability",
+    "slots",
+    "appointments",
+    "reservations",
+    "calendar",
+    "events",
+    "scheduling",
+    "booking-system",
+    "time-management",
+    "resource-booking",
+    "event-booking",
+    "appointment-scheduling",
+    "booking-api",
+    "booking-service",
+    "booking-tool",
+    "booking-platform",
+    "booking-solution",
+    "booking-software",
+    "booking-management-system",
+    "booking-application",
+    "booking-framework",
+    "booking-library",
+    "booking-engine",
+    "booking-scheduler",
+    "booking-manager",
+    "booking-handler",
+    "booking-controller"
+  ],
+  "author": "Nishant",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nishant-Kumar-devz/Booking-Management/issues"
+  },
+  "homepage": "https://github.com/Nishant-Kumar-devz/Booking-Management#readme"
+}
