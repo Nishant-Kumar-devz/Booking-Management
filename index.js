@@ -2,6 +2,7 @@ import { setAvailableTime, setDayOffs, getConfig } from "./settings.js";
 import { bookSlot, getAvailableSlots } from "./booking.js";
 import { getAllBookings, getBookingByDate } from "./admin.js";
 import mongoose from "mongoose";
+import { BookingSDKError } from "./errors.js";
 
 export default class BookingSDK {
   constructor() {

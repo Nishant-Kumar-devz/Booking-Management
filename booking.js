@@ -1,3 +1,4 @@
+import { BookingSDKError } from "./errors.js";
 import Booking from "./models/booking.model.js";
 import { getConfig } from "./settings.js";
 import { isTimeWithinRange, generateAvailableSlots } from "./utils.js";

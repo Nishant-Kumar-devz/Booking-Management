@@ -1,3 +1,4 @@
+import { BookingSDKError } from "./errors.js";
 import Booking from "./models/booking.model.js";
 
 export const getAllBookings = async (page = 1, limit = 10) => {
