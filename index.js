@@ -1,10 +1,13 @@
 import { setAvailableTime, setDayOffs, getConfig } from './settings.js';
 import { bookSlot, getAvailableSlots } from './booking.js';
 import { getAllBookings } from './admin.js';
+import mongoose from 'mongoose';
 
 export default class BookingSDK {
-  constructor({ dbConnection }) {
-    if (!dbConnection) throw new Error("MongoDB connection required");
+  constructor() {
+    if (mongoose.connection.readyState !== 1) {
+      throw new Error("Mongoose is not connected. Please ensure mongoose.connect() is called before using BookingSDK methods.");
+    }
   }
 
   setAvailableTime(start, end) {
