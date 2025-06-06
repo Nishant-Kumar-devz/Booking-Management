@@ -1,12 +1,16 @@
-import { setAvailableTime, setDayOffs, getConfig } from './settings.js';
-import { bookSlot, getAvailableSlots } from './booking.js';
-import { getAllBookings, getBookingByDate } from './admin.js';
-import mongoose from 'mongoose';
+import { setAvailableTime, setDayOffs, getConfig } from "./settings.js";
+import { bookSlot, getAvailableSlots } from "./booking.js";
+import { getAllBookings, getBookingByDate } from "./admin.js";
+import mongoose from "mongoose";
 
 export default class BookingSDK {
   constructor() {
     if (mongoose.connection.readyState !== 1) {
-      throw new Error("Mongoose is not connected. Please ensure mongoose.connect() is called before using BookingSDK methods.");
+      throw new Error({
+        success: false,
+        message:
+          "Mongoose is not connected. Please ensure mongoose.connect() is called before using BookingSDK methods.",
+      });
     }
   }
 

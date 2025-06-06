@@ -5,7 +5,7 @@ import { isTimeWithinRange, generateAvailableSlots } from "./utils.js";
 export async function bookSlot(userId, startTimeISO, duration) {
   const allowedDurations = [15, 30, 60];
   if (!allowedDurations.includes(duration)) {
-    throw new Error("Invalid duration.");
+    throw new Error({ success: false, message: "Invalid duration." });
   }
 
   const startTime = new Date(startTimeISO);
@@ -14,11 +14,14 @@ export async function bookSlot(userId, startTimeISO, duration) {
 
   const day = startTime.toLocaleString("en-US", { weekday: "long" });
   if (config.offDays.includes(day)) {
-    throw new Error(`${day} is a day off.`);
+    throw new Error({ success: false, message: `${day} is a day off.` });
   }
 
   if (!isTimeWithinRange(startTime, endTime, config.availableTime)) {
-    throw new Error("Time is outside of available hours.");
+    throw new Error({
+      success: false,
+      message: "Time is outside of available hours.",
+    });
   }
 
   const conflict = await Booking.findOne({
@@ -33,7 +36,7 @@ export async function bookSlot(userId, startTimeISO, duration) {
   });
 
   if (conflict) {
-    throw new Error("Time slot already booked.");
+    throw new Error({ success: false, message: "Time slot already booked." });
   }
 
   const booking = new Booking({ userId, startTime, endTime });
@@ -43,7 +46,10 @@ export async function bookSlot(userId, startTimeISO, duration) {
 
 export async function getAvailableSlots(dateISO) {
   if (!dateISO || isNaN(Date.parse(dateISO))) {
-    throw new Error("Invalid date format. Please provide a valid ISO date string.");
+    throw new Error({
+      success: false,
+      message: "Invalid date format. Please provide a valid ISO date string.",
+    });
   }
   const dateObj = new Date(dateISO);
 
@@ -81,8 +87,7 @@ export async function getAvailableSlots(dateISO) {
   // Filter out booked slots
   const filtered = slots.filter((slot) => {
     return !bookings.some(
-      (b) =>
-        b.startTime < slot.end && b.endTime > slot.start
+      (b) => b.startTime < slot.end && b.endTime > slot.start
     );
   });
 
