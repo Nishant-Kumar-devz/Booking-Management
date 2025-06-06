@@ -1,18 +1,34 @@
-export function isTimeWithinRange(start, end, { start: aStart, end: aEnd }) {
-  const [startH, startM] = aStart.split(':').map(Number);
-  const [endH, endM] = aEnd.split(':').map(Number);
+export function isTimeWithinRange(
+  bookingStartTime,
+  bookingEndTime,
+  { start: availabilityStartStr, end: availabilityEndStr }
+) {
+  const [availStartH, availStartM] = availabilityStartStr
+    .split(":")
+    .map(Number);
+  const [availEndH, availEndM] = availabilityEndStr.split(":").map(Number);
 
-  const availableStart = new Date(start);
-  availableStart.setHours(startH, startM, 0, 0);
-  const availableEnd = new Date(end);
-  availableEnd.setHours(endH, endM, 0, 0);
+  const bookingDate = new Date(bookingStartTime);
+  const year = bookingDate.getUTCFullYear();
+  const month = bookingDate.getUTCMonth();
+  const day = bookingDate.getUTCDate();
+  const availableStartUTC = new Date(
+    Date.UTC(year, month, day, availStartH, availStartM, 0, 0)
+  );
+  const availableEndUTC = new Date(
+    Date.UTC(year, month, day, availEndH, availEndM, 0, 0)
+  );
+  const bookingStartDateTime = new Date(bookingStartTime);
+  const bookingEndDateTime = new Date(bookingEndTime);
+  const isStartWithin = bookingStartDateTime >= availableStartUTC;
+  const isEndWithin = bookingEndDateTime <= availableEndUTC;
 
-  return start >= availableStart && end <= availableEnd;
+  return isStartWithin && isEndWithin;
 }
 
 export function generateAvailableSlots(date, { start, end }) {
-  const startParts = start.split(':').map(Number);
-  const endParts = end.split(':').map(Number);
+  const startParts = start.split(":").map(Number);
+  const endParts = end.split(":").map(Number);
 
   const slots = [];
   const minDuration = 15;
